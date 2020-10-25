@@ -12,7 +12,7 @@ on:
   release:
     types: [created]
   push:
-    branches: [ main ]
+    branches: [ main, deploy ]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
