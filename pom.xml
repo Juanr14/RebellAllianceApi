@@ -25,6 +25,10 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-rest</artifactId>
         </dependency>
@@ -87,23 +91,21 @@
 			</activation>
 			<properties>
 				<build.profile.id>dev</build.profile.id>
-				<profileActive>dev</profileActive>
+			   <activatedProperties>dev</activatedProperties>
 			</properties>
 		</profile>
 		<profile>
-			<id>test</id>
-			<properties>
-				<build.profile.id>test</build.profile.id>
-				<profileActive>test</profileActive>
-			</properties>
-		</profile>
+            <id>test</id>
+            <properties>
+                <activatedProperties>test</activatedProperties>
+            </properties>
+        </profile>
 		<profile>
-			<id>prod</id>
-			<properties>
-				<build.profile.id>prod</build.profile.id>
-				<profileActive>prod</profileActive>
-			</properties>
-		</profile>
+            <id>prod</id>
+            <properties>
+                <activatedProperties>prod</activatedProperties>
+            </properties>
+        </profile>
 	</profiles>
 
 </project>
