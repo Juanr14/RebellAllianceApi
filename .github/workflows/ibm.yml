@@ -24,7 +24,7 @@ env:
   IMAGE_NAME: rebel-alliance
   IKS_CLUSTER: buaeuslf0rgum8ighsrg
   DEPLOYMENT_NAME: rebel-alliance
-  PORT: 5001
+  PORT: 8080
 
 jobs:
   setup-build-publish-deploy:
