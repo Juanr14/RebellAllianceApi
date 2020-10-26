@@ -38,6 +38,7 @@ public class TopSecretSplitServiceImpl implements ITopSecretSplitService{
 
 	@Override
 	public void savePartialData(SatelliteInfoDTO satellite) {
+		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Tratando de guardar la data del satelite: ", satellite);
 		
 		SatelliteData satelliteToSave = new SatelliteData();
 		
@@ -46,8 +47,12 @@ public class TopSecretSplitServiceImpl implements ITopSecretSplitService{
 		
 		String[] words = satellite.getMessage();
 		satelliteToSave.setMessage(String.join(",", words));
+		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Data Mapeada para guardar: ", satelliteToSave);
 		
 		satelliteDataRepository.save(satelliteToSave);
-				
+		
+		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Data guardada correctamente ");
+
+						
 	}
 }
