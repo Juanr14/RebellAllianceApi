@@ -1,11 +1,16 @@
 package co.com.mercadolibre.rebell.alliance.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import co.com.mercadolibre.rebell.alliance.domain.SatelliteData;
+import co.com.mercadolibre.rebell.alliance.dto.PositionDTO;
 import co.com.mercadolibre.rebell.alliance.dto.SatelliteInfoDTO;
 import co.com.mercadolibre.rebell.alliance.dto.response.TopSecretSplitResponseDTO;
 import co.com.mercadolibre.rebell.alliance.repository.ISatelliteDataRepository;
@@ -15,6 +20,9 @@ import co.com.mercadolibre.rebell.alliance.service.ITopSecretSplitService;
 
 @Service
 public class TopSecretSplitServiceImpl implements ITopSecretSplitService{
+	
+	@Value("${satellites.number}")
+	private int satellitesNumber;
 
 	@Autowired
 	private ILocationService locationService;
@@ -30,10 +38,29 @@ public class TopSecretSplitServiceImpl implements ITopSecretSplitService{
 	
 	@Override
 	public TopSecretSplitResponseDTO identifyMessage() {
-		// TODO Auto-generated method stub
-		return null;
 		
+		TopSecretSplitResponseDTO response = new TopSecretSplitResponseDTO();
+		List<SatelliteData> satellitesSaved = satelliteDataRepository.findAll();
 		
+		if(satellitesSaved.size() == satellitesNumber) {
+			logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Informacion completa realizando identificacion: "+satellitesSaved.toString());
+			List<SatelliteInfoDTO> mappedSatellites = satellitesSaved.stream()
+					.map(currentSatellite -> transformData(currentSatellite))
+			        .collect(Collectors.toList()); 
+			logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Informacion mapeada lista para procesar: "+mappedSatellites.toString());
+
+			SatelliteInfoDTO[] satellitesArray = mappedSatellites.toArray(new SatelliteInfoDTO[0]);
+			PositionDTO position = locationService.getPosition(mappedSatellites.toArray(satellitesArray));
+			String messageDecoded = messageDecoderService.decodeMessage(mappedSatellites.toArray(satellitesArray));
+			
+			logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Response enviada al controller: "+response.toString());
+			response.setPosition(position); 
+			response.setMessage(messageDecoded);
+			return response;
+		}
+		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] No hay informacion suficiente para identificar el mensaje: "+satellitesSaved.toString());
+		return response;
+			
 	}
 
 	@Override
@@ -47,12 +74,26 @@ public class TopSecretSplitServiceImpl implements ITopSecretSplitService{
 		
 		String[] words = satellite.getMessage();
 		satelliteToSave.setMessage(String.join(",", words));
-		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Data Mapeada para guardar: ", satelliteToSave);
+		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Data Mapeada para guardar: "+ satelliteToSave.toString());
 		
 		satelliteDataRepository.save(satelliteToSave);
 		
 		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Data guardada correctamente ");
 
 						
+	}
+	
+	private SatelliteInfoDTO transformData(SatelliteData satelliteToTransform) {
+		
+		SatelliteInfoDTO transformedSatellite = new SatelliteInfoDTO();
+		
+		transformedSatellite.setName(satelliteToTransform.getName());
+		transformedSatellite.setDistance(satelliteToTransform.getDistance());
+		
+		String[] messageParsed = satelliteToTransform.getMessage().split(",");
+		
+		transformedSatellite.setMessage(messageParsed);
+		
+		return transformedSatellite;
 	}
 }

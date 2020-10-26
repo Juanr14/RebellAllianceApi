@@ -31,8 +31,10 @@ public class TopSecretServiceImpl implements ITopSecretService{
 		PositionDTO position = locationService.getPosition(satellites);
 		String messageDecoded = messageDecoderService.decodeMessage(satellites);
 		
-		if(position != null && messageDecoded != null) return null;
-		return new TopSecretResponseDTO(position, messageDecoded);
+		TopSecretResponseDTO response = new TopSecretResponseDTO();
+		response.setPosition(position); 
+		response.setMessage(messageDecoded);
+		return response;
 	}
 
 

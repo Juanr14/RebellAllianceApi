@@ -22,6 +22,7 @@ import co.com.mercadolibre.rebell.alliance.dto.SatelliteInfoDTO;
 import co.com.mercadolibre.rebell.alliance.dto.request.TopSecretRequestDTO;
 import co.com.mercadolibre.rebell.alliance.dto.request.TopSecretSplitRequestDTO;
 import co.com.mercadolibre.rebell.alliance.dto.response.TopSecretResponseDTO;
+import co.com.mercadolibre.rebell.alliance.dto.response.TopSecretSplitResponseDTO;
 import co.com.mercadolibre.rebell.alliance.service.IMessageDecoderService;
 import co.com.mercadolibre.rebell.alliance.service.ITopSecretService;
 import co.com.mercadolibre.rebell.alliance.service.ITopSecretSplitService;
@@ -64,8 +65,7 @@ public class TopSecretController {
 
 	}
 	
-	@PostMapping(consumes="application/json")
-	@RequestMapping("/topsecret_split/{satellite_name}")
+	@PostMapping("/topsecret_split/{satellite_name}")
 	public ResponseEntity<Void> saveSplitMessageData(
 			@Valid 
 			@PathVariable("satellite_name") String satelliteName, @Valid @RequestBody TopSecretSplitRequestDTO request){
@@ -82,11 +82,17 @@ public class TopSecretController {
 	}
 	
 	@GetMapping("/topsecret_split")
-	public ResponseEntity<Object> analyzeSplitMessage(@Valid @RequestBody TopSecretRequestDTO request){
+	public ResponseEntity<Object> analyzeSplitMessage(){
 		logger.info("[Rebell Alliance - TopSecretController] Performing /topsecret_split get request...");
 
-		String decodedMessage = messageDecoderService.decodeMessage(request.getSatellites());
-		return new ResponseEntity<Object>(decodedMessage, HttpStatus.OK);
+		TopSecretSplitResponseDTO response = topSecretSplitService.identifyMessage();
+		
+		if(response.getPosition() == null || response.getMessage() == null) {
+			logger.info("[Rebell Alliance - TopSecretController] No se pudo descifrar la posición o el mensaje");
+			return ResponseEntity.notFound().build();
+		} 
+		logger.info("[Rebell Alliance - TopSecretController] Mensaje analizado con exito - Respuesta", response);
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
 
 	}
 	
