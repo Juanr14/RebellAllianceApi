@@ -145,8 +145,6 @@ Este pipeline se dispara cuando se genera un release o cuando se hace un push a 
 - Se realiza el push de la imagen al IBM Cloud Container
 - Finalmente se despliega la imagen docker generada al IBM Cloud Kubernetes Service cluster
 
-## Evidencia pipelines
-
 
 ## Consideraciones:
 - Esta aplicacion fue desplegada en etapas tempranas del desarrollo, por lo que solo cuenta con el endpoint post **/test** que recibe cualquier body y retorna el ambiente actual y un endpoint **/topsecret** que responde el mismo body que se le envia.
