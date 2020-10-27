@@ -6,13 +6,13 @@ Aplicacion REST que permite descifrar y hallar el mensaje enviado por una de las
 ## Herramientas usadas
 
 - **Lenguaje de programación:** Java 8
-- **Framework:** Springboot 2.3.3
+- **Framework:** Springboot 2.3.4
 - **Base de datos:** H2 (SQL) embebida
 - **Gestor de versiones - Fuentes:** Git / Github
 - **CI / CD:** Github Actions, IBM Cloud docker y kubernetes revisar [Wiki](https:google.com)
 - **Cloud deployment con:** [Heroku](https://www.heroku.com/).
-- **Enpoint (Para pruebas):** https://shielded-anchorage-15219.herokuapp.com/api/v1/
-- 
+- **Enpoint (Para pruebas):** https://afternoon-beyond-22649.herokuapp.com/api/v1/
+
 ## Pasos para instalar y ejecutar el proyecto
 1. Instalar [JDK 8](https://www.oracle.com/co/java/technologies/javase/javase-jdk8-downloads.html).
 2. Configurar variables de entorno JAVA_HOME.
@@ -31,11 +31,9 @@ Aplicacion REST que permite descifrar y hallar el mensaje enviado por una de las
 - **repository:** En este paquete se alojan las interfaces encargadas de gestionar los métodos brindados por el ORM (JPA) para interactuar con la BD. Allí se han definido unas consultas adicionales a las que vienen por defecto en el framework, para los requerimientos establecidos.
 - **service:** En este paquete se alojan las interfaces y respectivas implementaciones de los servicios, los cuales se encargan de manejar la lógica de negocio del API.
 - **dto:** En este paquete se almacenan los DataTransferObject (DTOs), usados para serializar información en distintas respuestas JSON.
-- **controller:** En este paquete se alojan los Controladores Rest, encargados de exponer los recursos REST emplados para la verificación de ADNs.
-- **config:** Clases encargadas de configurar la aplicación springboot. Implementación de filtro para interceptar y autorizar el acceso a los recursos. Asociación de recursos eximidos del filtro de autenticación.
-- **security:** Definición del filtro de autenticación mediante JWT Token, para el recurso de autenticación.
+- **controller:** En este paquete se alojan los Controladores Rest, encargados de exponer los recursos REST emplados.
+- **config:** Clases encargadas de configurar la aplicación springboot. 
 
-En la carpeta de las pruebas unitarias (../test), se encuentran los mismos paquetes, dentro de los cuales se encuentran cada una de las clases necesarias para probar el mayor porcentaje de código posible. Se utilizó JUnit y mockito para estos efectos, junto con JoCoCo como librería de chequeo de cobertura.
 
 ## Manejo del repositorio
 
