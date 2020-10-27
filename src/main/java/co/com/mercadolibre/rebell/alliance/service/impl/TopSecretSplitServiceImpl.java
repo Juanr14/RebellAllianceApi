@@ -2,6 +2,7 @@ package co.com.mercadolibre.rebell.alliance.service.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class TopSecretSplitServiceImpl implements ITopSecretSplitService{
 		satelliteToSave.setName(satellite.getName());
 		satelliteToSave.setDistance(satellite.getDistance());
 		
-		String[] words = satellite.getMessage();
+		List<String> words = satellite.getMessage();
 		satelliteToSave.setMessage(String.join(",", words));
 		logger.info("[Rebell Alliance - TopSecretSplitServiceImpl] Data Mapeada para guardar: "+ satelliteToSave.toString());
 		
@@ -90,7 +91,9 @@ public class TopSecretSplitServiceImpl implements ITopSecretSplitService{
 		transformedSatellite.setName(satelliteToTransform.getName());
 		transformedSatellite.setDistance(satelliteToTransform.getDistance());
 		
-		String[] messageParsed = satelliteToTransform.getMessage().split(",");
+		List<String> messageParsed = 
+				Stream.of(satelliteToTransform.getMessage().split(",",-1))
+				  .collect(Collectors.toList());
 		
 		transformedSatellite.setMessage(messageParsed);
 		

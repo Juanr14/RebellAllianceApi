@@ -32,6 +32,7 @@ public class TopSecretServiceImpl implements ITopSecretService{
 		String messageDecoded = messageDecoderService.decodeMessage(satellites);
 		
 		TopSecretResponseDTO response = new TopSecretResponseDTO();
+		logger.info("[Rebell Alliance - TopSecretServiceImpl] Response enviada al controller: "+response.toString());
 		response.setPosition(position); 
 		response.setMessage(messageDecoded);
 		return response;

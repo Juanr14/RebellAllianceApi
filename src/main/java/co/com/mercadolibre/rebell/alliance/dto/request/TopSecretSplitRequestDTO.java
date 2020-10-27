@@ -1,6 +1,7 @@
 package co.com.mercadolibre.rebell.alliance.dto.request;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,5 +16,5 @@ public class TopSecretSplitRequestDTO implements Serializable {
 
 	public float distance;
 	
-	public String[] message;
+	public List<String> message;
 }
