@@ -9,7 +9,7 @@ Aplicacion REST que permite descifrar y hallar el mensaje enviado por una de las
 - **Framework:** Springboot 2.3.4
 - **Base de datos:** H2 (SQL) embebida
 - **Gestor de versiones - Fuentes:** Git / Github
-- **CI / CD:** Github Actions, IBM Cloud docker y kubernetes revisar [Wiki](https:google.com)
+- **CI / CD:** Github Actions, IBM Cloud docker y kubernetes revisar [readme](https://github.com/Juanr14/RebellAllianceApi/tree/main/.github/workflows)
 - **Cloud deployment con:** [Heroku](https://www.heroku.com/).
 - **Enpoint (Para pruebas):** https://afternoon-beyond-22649.herokuapp.com/api/v1/
 
