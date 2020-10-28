@@ -12,6 +12,7 @@ Aplicacion REST que permite descifrar y hallar el mensaje enviado por una de las
 - **CI / CD:** Github Actions, IBM Cloud docker y kubernetes revisar [readme](https://github.com/Juanr14/RebellAllianceApi/tree/main/.github/workflows)
 - **Cloud deployment con:** [Heroku](https://www.heroku.com/).
 - **Enpoint (Para pruebas):** https://afternoon-beyond-22649.herokuapp.com/api/v1/
+- **Pruebas unitarias: ** Junit, se realizan pruebas unitarias sobre los services
 
 ## Pasos para instalar y ejecutar el proyecto
 1. Instalar [JDK 8](https://www.oracle.com/co/java/technologies/javase/javase-jdk8-downloads.html).
